@@ -19,29 +19,17 @@ console.log(process.env.GEMENI_API_KEY);
 const ai = new genai_1.GoogleGenAI({ apiKey: process.env.GEMENI_API_KEY });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a, _b, _c;
-        const response = yield ai.models.generateContent({
+        const result = yield ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: [
-                "Make a simple To-do website in React ans TS"
+                { role: "user", parts: [{ text: "Make a simple To-do website" }] }
             ],
             config: {
-                tools: [{ codeExecution: {} }],
-                systemInstruction: "You are a master code editor. You return even complex codes. Say if the user asks for React code snippets, you can return simple code snippets, like to do app, but without connecting DB. You have to give it in different files, and also make sure it is easy for me to parse, and make sure to keep it same throughout. If the user does not give specific language instructions, answer in Python"
+                systemInstruction: "Return either node or react based on what do you think this project should be. Only return a single word either 'node' or 'react'. Do not return anything extra",
+                temperature: 0.1
             },
         });
-        const parts = ((_c = (_b = (_a = response === null || response === void 0 ? void 0 : response.candidates) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.parts) || [];
-        parts.forEach((part) => {
-            if (part.text) {
-                console.log(part.text);
-            }
-            if (part.executableCode && part.executableCode.code) {
-                console.log(part.executableCode.code);
-            }
-            if (part.codeExecutionResult && part.codeExecutionResult.output) {
-                console.log(part.codeExecutionResult.output);
-            }
-        });
+        console.log(result.text);
     });
 }
 main();
