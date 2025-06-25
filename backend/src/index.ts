@@ -1,4 +1,4 @@
-require("dotenv").config();
+import dotenv from 'dotenv';
 import express from "express";
 import { GoogleGenAI } from "@google/genai";
 import { BASE_PROMPT, getSystemPrompt } from "./prompts";
@@ -6,9 +6,14 @@ import { basePrompt as nodeBasePrompt } from "./defaults/node";
 import { basePrompt as reactBasePrompt } from "./defaults/react";
 import cors from "cors";
 
+dotenv.config()
+
 const genAI = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY
+    apiKey: process.env.GEMENI_API_KEY
 });
+
+console.log(process.env.GEMENI_API_KEY, "Key");
+
 
 const app = express();
 app.use(cors());
